@@ -28,9 +28,9 @@ jobs:
           az aks get-credentials -n $aksname -g $aksresourceGroup
           sudo az aks install-cli
           kubelogin convert-kubeconfig -l azurecli
-          kubectl get pods -A
-          kubectl run httpd --image=httpd 
-
+          az aks command invoke -n $aksname -g $aksresourceGroup 'kubectl pods -A'
+          az aks command invoke -n $aksname -g $aksresourceGroup 'kubectl run nginx --image=nginx'
+      
       - name: printenv
         run: |
           printenv|sort
