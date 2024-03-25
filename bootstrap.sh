@@ -1,15 +1,22 @@
-export location="Sweden Central"
+export location="swedencentral"
 export number=$((RANDOM%900000+100000))
+export number=101125
 
-az group create rgstate$number --location $location
-az group create rgidentity$number --location $location
-az group create rgplatform$number --location $location
+idstate=$(az group create -g rgstate$number --location $location --query "id" -o tsv)
+ididentity=$(az group create -g rgidentity$number --location $location --query "id" -o tsv)
+idplatform=$(az group create -g rgplatform$number --location $location --query "id" -o tsv)
 
-az identity create --name mi$number --resource-group rgidentity$number
+id=$(az identity create --name mi$number --resource-group rgidentity$number --query "principalId" -o tsv)
 
-az role assignment create --assignee mi$number --role "Contributor" --scope /subscriptions/$subscriptionId/resourceGroups/rgstate$number
-az role assignment create --assignee mi$number --role "Reader" --scope /subscriptions/$subscriptionId/resourceGroups/rgidentity$number
-az role assignment create --assignee mi$number --role "Owner" --scope /subscriptions/$subscriptionId/resourceGroups/rgplatform$number
+az role assignment create --assignee-object-id $id --role "Contributor" --scope $idstate
+az role assignment create --assignee-object-id $id --role "Reader" --scope $ididentity
+az role assignment create --assignee-object-id $id --role "Owner" --scope $idplatform
 
 az storage account create --name sa$number --resource-group rgstate$number --location $location --sku Standard_LRS
 az storage container create --name state --account-name sa$number
+
+echo "stateStorageAccountName=sa$number" >> /tmp/outputs
+echo "stateStorageAccountKey=$(az storage account keys list --account-name sa$number --resource-group rgstate$number --query "[0].value" -o tsv)" >> /tmp/outputs
+echo "stateStorageAccountContainerName=state" >> /tmp/outputs
+
+
