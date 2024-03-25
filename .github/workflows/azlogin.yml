@@ -11,17 +11,18 @@ jobs:
   run-azlogin:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Az CLI login'
+      - name: 'azure cli login'
         uses: azure/login@v2
         with:
-          client-id: ${{ vars.CLIENT_ID }}
+          client-id: ${{ vars.ADMIN_CLIENT_ID }}
           tenant-id: ${{ vars.TENANT_ID }}
           subscription-id: ${{ vars.SUBSCRIPTION_ID }}
 
-      - name: 'Run az commands'
+      - name: 'run az commands'
         run: |
           az account list -o table
           az group list -o table
+          az aks list -o table
       - name: printenv
         run: |
-          printenv
+          printenv|sort
