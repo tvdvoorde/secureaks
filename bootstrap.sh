@@ -15,13 +15,18 @@ az storage account create --name sa$number --resource-group rgstate$number --loc
 az storage container create --name state --account-name sa$number
 az identity federated-credential create --name "github" --identity-name mi$number -g $ididentity --issuer "https://token.actions.githubusercontent.com" --subject "repo:tvdvoorde/secureaks:ref:refs/heads/main" --audiences "api://AzureADTokenExchange"
 
-# user
+# admin
 
-iduser=$(az identity create --name miuser$number --resource-group rgidentity$number --query "principalId" -o tsv)
+iduser=$(az identity create --name miadmin$number --resource-group rgidentity$number --query "principalId" -o tsv)
 az role assignment create --assignee-object-id $iduser --role "Reader" --scope $idplatform
 az role assignment create --assignee-object-id $iduser --role "Azure Kubernetes Service RBAC Cluster Admin" --scope $idplatform
 
-
-
 # 038a4bbf-fda8-4123-ac1a-cade09488645
+
+# developer
+
+iduser=$(az identity create --name mideveloper$number --resource-group rgidentity$number --query "principalId" -o tsv)
+az role assignment create --assignee-object-id $iduser --role "Reader" --scope $idplatform
+az role assignment create --assignee-object-id $iduser --role "Azure Kubernetes Service RBAC Cluster Admin" --scope $idplatform
+
 

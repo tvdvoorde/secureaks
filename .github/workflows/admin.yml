@@ -1,4 +1,4 @@
-name: azlogin
+name: admin
 
 on:
   workflow_dispatch:
@@ -23,6 +23,12 @@ jobs:
           az account list -o table
           az group list -o table
           az aks list -o table
+          aksname=$(az aks list --query "[].name" -o tsv)
+          aksresourceGroup=$(az aks list --query "[].resourceGroup" -o tsv)
+          az aks get-credentials -n $aksname -g $aksresourceGroup
+          kubelogin convert-kubeconfig -l azurecli
+          kubectl get pods -A
+
       - name: printenv
         run: |
           printenv|sort
