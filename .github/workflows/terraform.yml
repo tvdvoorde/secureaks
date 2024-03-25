@@ -30,15 +30,13 @@ jobs:
         run: |
           terraform -chdir=infra init \
               -backend-config="key=secureaks.tfstate" \
-              -backend-config="resource_group_name=rgstate${{ vars.ENV_ID }}" \
-              -backend-config="storage_account_name=sa${{ vars.ENV_ID }}" \
-              -backend-config="use_oidc=true"
-      - name: terraform plan
+              -backend-config="resource_group_name=${{ vars.STATE_RESOURCE_GROUP_NAME }}" \
+              -backend-config="storage_account_name=${{ vars.STATE_STORAGE_ACCOUNT_NAME }}" \
+      - name: terraform plan -var="env_id=${{ vars.ENV_ID }}"
         run: |
           terraform -chdir=infra plan 
       - name: terraform apply
         run: |
-          terraform -chdir=infra apply -auto-approve 
+          terraform -chdir=infra apply -auto-approve -var="env_id=${{ vars.ENV_ID }}"
 
-              
 
