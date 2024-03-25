@@ -52,6 +52,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 #     identity_ids = [azurerm_user_assigned_identity.aks.id]
 #   }
 
+  identity {
+    type         = "SystemAssigned"
+    # identity_ids = [azurerm_user_assigned_identity.aks.id]
+  }
   network_profile {
     network_plugin      = "azure"
     network_plugin_mode = "overlay"
