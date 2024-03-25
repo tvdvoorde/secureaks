@@ -1,4 +1,4 @@
-name: admin
+name: developer
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
       - name: 'azure cli login'
         uses: azure/login@v2
         with:
-          client-id: ${{ vars.ADMIN_CLIENT_ID }}
+          client-id: ${{ vars.DEVELOPER_CLIENT_ID }}
           tenant-id: ${{ vars.TENANT_ID }}
           subscription-id: ${{ vars.SUBSCRIPTION_ID }}
 
@@ -29,8 +29,8 @@ jobs:
           sudo az aks install-cli
           kubelogin convert-kubeconfig -l azurecli
           kubectl get pods -A
-          kubectl run nginx --image=nginx 
-          
+          kubectl create ns dev || echo "ok"
+          kubectl create ns prod || echo "ok"
 
       - name: printenv
         run: |

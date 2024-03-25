@@ -11,7 +11,7 @@ env:
   ARM_USE_OIDC: true
   ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ vars.TENANT_ID }}
-  ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
+  ARM_CLIENT_ID: ${{ vars.ADMIN_CLIENT_ID }}
 
 jobs:
   run-terraform:
