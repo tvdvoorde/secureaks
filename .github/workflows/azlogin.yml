@@ -8,13 +8,20 @@ permissions:
   contents: read
   
 jobs:
-  run-tests:
+  run-azlogin:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
+      - name: 'Az CLI login'
+        uses: azure/login@v1
         with:
-          terraform_version: 1.6.0
+          client-id: ${{ vars.CLIENT_ID }}
+          tenant-id: ${{ vars.TENANT_ID }}
+          subscription-id: ${{ vars.SUBSCRIPTION_ID }}
+
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
       - name: printenv
         run: |
           printenv
