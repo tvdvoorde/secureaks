@@ -12,6 +12,8 @@ env:
   ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ vars.TENANT_ID }}
   ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
+  RESOURCE_GROUP_NAME: rgstate${{ vars.NUMBER }}
+  STORAGE_ACCOUNT_NAME: sa${{ vars.NUMBER }}
 
 jobs:
   run-terraform:
@@ -30,7 +32,7 @@ jobs:
         run: |
           terraform -chdir=infra init \
               -backend-config="key=secureaks.tfstate" \
-              -backend-config="resource_group_name=rg101125" \
+              -backend-config="resource_group_name=rgstate101125" \
               -backend-config="storage_account_name=sa101125" \
               -backend-config="use_oidc=true"
       - name: terraform plan
