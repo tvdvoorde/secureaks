@@ -28,8 +28,8 @@ jobs:
           az aks get-credentials -n $aksname -g $aksresourceGroup
           sudo az aks install-cli
           kubelogin convert-kubeconfig -l azurecli
-          kubectl get pods -A
-          kubectl run nginx --image=nginx 
+          az aks command invoke -n $aksname -g $aksresourceGroup 'kubectl pods -A'
+
           
 
       - name: printenv
