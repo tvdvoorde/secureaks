@@ -22,7 +22,10 @@ jobs:
               -backend-config="storage_account_name=sa101125"
       - name: terraform plan
         run: |
-          terraform -chdir=infra init \
+          terraform -chdir=infra plan \
               -var='subscription_id=${{ vars.SUBSCRIPTION_ID }}' \
+              -var='tenant_id=${{ vars.TENANT_ID }}' \
+              -var='client_id=${{ vars.CLIENT_ID }}' 
+
               
 
