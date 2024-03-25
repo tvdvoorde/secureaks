@@ -29,9 +29,9 @@ jobs:
           az aks get-credentials -n $aksname -g $aksresourceGroup
           sudo az aks install-cli
           kubelogin convert-kubeconfig -l azurecli
-          az aks command invoke -n $aksname -g $aksresourceGroup 'kubectl get pods -A'
-          az aks command invoke -n $aksname -g $aksresourceGroup -f deployment.yaml 'kubectl apply -f deployment.yaml'
-          az aks command invoke -n $aksname -g $aksresourceGroup -f namespaces.yaml 'kubectl apply -f namespaces.yaml'
+          az aks command invoke -n $aksname -g $aksresourceGroup -c 'kubectl get pods -A'
+          az aks command invoke -n $aksname -g $aksresourceGroup -f deployment.yaml -c 'kubectl apply -f deployment.yaml'
+          az aks command invoke -n $aksname -g $aksresourceGroup -f namespaces.yaml -c 'kubectl apply -f namespaces.yaml'
          
 
           
