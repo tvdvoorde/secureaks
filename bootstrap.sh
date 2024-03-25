@@ -15,8 +15,7 @@ az role assignment create --assignee-object-id $id --role "Owner" --scope $idpla
 az storage account create --name sa$number --resource-group rgstate$number --location $location --sku Standard_LRS
 az storage container create --name state --account-name sa$number
 
-echo "stateStorageAccountName=sa$number" >> /tmp/outputs
-echo "stateStorageAccountKey=$(az storage account keys list --account-name sa$number --resource-group rgstate$number --query "[0].value" -o tsv)" >> /tmp/outputs
-echo "stateStorageAccountContainerName=state" >> /tmp/outputs
 
+
+az identity federated-credential create --name "github" --identity-name mi$number -g $ididentity --issuer "https://token.actions.githubusercontent.com" --subject "repo:tvdvoorde/secureaks:ref:refs/heads/main" --audiences "api://AzureADTokenExchange"
 
