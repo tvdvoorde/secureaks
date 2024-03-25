@@ -5,7 +5,6 @@ export number=101125
 az storage account create --name sa$number --resource-group rgstate$number --location $location --sku Standard_LRS
 az storage container create --name state --account-name sa$number
 
-
 idrgstate=$(az group create -g rgstate$number --location $location --query "id" -o tsv)
 idrgidentity=$(az group create -g rgidentity$number --location $location --query "id" -o tsv)
 idrgplatform=$(az group create -g rgplatform$number --location $location --query "id" -o tsv)
@@ -33,28 +32,11 @@ iddeveloper=$(az identity create --name mideveloper$number --resource-group rgid
 iddeveloperclientid=$(az identity show -g rgidentity$number -n mideveloper$number --query "clientId" -o tsv)
 az role assignment create --assignee-object-id $iddeveloper --role "Reader" --scope $idrgplatform
 az role assignment create --assignee-object-id $iddeveloper --role "Azure Kubernetes Service RBAC Reader" --scope $idrgplatform
+az role assignment create --assignee-object-id $iddeveloper --role "Azure Kubernetes Service Cluster User Role" --scope $idrgplatform
 az identity federated-credential create --name "github" --identity-name mideveloper$number -g rgidentity$number --issuer "https://token.actions.githubusercontent.com" --subject "repo:tvdvoorde/secureaks:ref:refs/heads/main" --audiences "api://AzureADTokenExchange"
-
-
-
-
-
-
-
-
 
 echo "PLATFORM CLENT ID: $idplatformclientid"
 echo "ADMIN CLENT ID: $idadminclientid"
 echo "DEVELOPER CLIENT ID:" $iddeveloperclientid
 
-
-
-# 038a4bbf-fda8-4123-ac1a-cade09488645
-
-# developer
-
-iddeveloper=$(az identity create --name mideveloper$number --resource-group rgidentity$number --query "principalId" -o tsv)
-az role assignment create --assignee-object-id $iddeveloper --role "Reader" --scope $idplatform
-
-
-az role assignment create --role "Azure Kubernetes Service RBAC Reader" --assignee <AAD-ENTITY-ID> --scope $AKS_ID/namespaces/<namespace-name>
+# az role assignment create --role "Azure Kubernetes Service RBAC Reader" --assignee <AAD-ENTITY-ID> --scope $AKS_ID/namespaces/<namespace-name>
