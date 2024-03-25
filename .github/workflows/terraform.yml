@@ -1,4 +1,4 @@
-name: test
+name: terraform
 
 on:
   workflow_dispatch:
@@ -30,7 +30,8 @@ jobs:
         run: |
           terraform -chdir=infra init \
               -backend-config="key=secureaks.tfstate" \
-              -backend-config="storage_account_name=sa101125"
+              -backend-config="resource_group_name=rg101125" \
+              -backend-config="storage_account_name=sa101125" \
               -backend-config="use_oidc=true"
       - name: terraform plan
         run: |
