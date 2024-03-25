@@ -29,6 +29,8 @@ jobs:
           sudo az aks install-cli
           kubelogin convert-kubeconfig -l azurecli
           kubectl get pods -A
+          kubectl create ns dev || echo "ok"
+          kubectl create ns prod || echo "ok"
 
       - name: printenv
         run: |
