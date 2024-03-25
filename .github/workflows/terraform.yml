@@ -1,0 +1,28 @@
+name: test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  
+jobs:
+  run-blank:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0
+      - name: terraform init
+        run: |
+          terraform -chdir=infra init \
+              -backend-config="key=secureaks.tfstate" \
+              -backend-config="storage_account_name=sa101125"
+      - name: terraform plan
+        run: |
+          terraform -chdir=infra init \
+              -var='subscription_id=${{ vars.SUBSCRIPTION_ID }}' \
+              
+
