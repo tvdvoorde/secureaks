@@ -4,9 +4,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name                 = data.azurerm_resource_group.rg.name
   dns_prefix                          = "aks001"
   automatic_channel_upgrade           = "node-image"
-#   private_cluster_enabled             = true
-#   private_dns_zone_id                 = "None"
-#   private_cluster_public_fqdn_enabled = true
+  private_cluster_enabled             = true
+  private_dns_zone_id                 = "None"
+  private_cluster_public_fqdn_enabled = true
   kubernetes_version                  = "1.28.3"
 #   azure_policy_enabled                = true
   role_based_access_control_enabled   = true
