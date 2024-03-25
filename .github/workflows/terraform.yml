@@ -14,7 +14,7 @@ env:
   ARM_CLIENT_ID=${{ vars.CLIENT_ID }}
 
 jobs:
-  run-blank:
+  run-terraform:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
