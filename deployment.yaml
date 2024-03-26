@@ -5,7 +5,12 @@ metadata:
     app: webserver
   name: webserver
 spec:
-  replicas: 1
+  replicas: 6
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 2
   selector:
     matchLabels:
       app: webserver
@@ -14,6 +19,38 @@ spec:
       labels:
         app: webserver
     spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: topology.kubernetes.io/zone
+        whenUnsatisfiable: DoNotSchedule
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app: webserver
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        nodeTaintsPolicy: Honor
+        labelSelector:
+          matchLabels:
+            app: webserver
       containers:
-      - image: httpd
+      - image: httpd:2.4.51
         name: httpd
+        resources:
+          # limits:
+          #   cpu: 100m
+          #   memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: webserver-pdb
+spec:
+  maxUnavailable: 33%
+  selector:
+    matchLabels:
+      app: webserver

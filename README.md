@@ -4,6 +4,9 @@
 ## new topics
 
 - deployment safeguards
+- application gateway for containers
+- node soak duration during updates
+- azure container storage (scale out statefullsets very fast)
 - vm ip based load balancer
 - host network security groups
 - network isolated cluster (outbound type=node)
@@ -118,3 +121,12 @@
 ## stretch
 
 - service connector
+
+### debug
+
+az group create -n test -l swedencentral
+az aks create -n test -g test -k 1.28.5 -c 3 -s "Standard_D2s_v5" -z 1 2 3 --nodepool-taints "CriticalAddonsOnly=true:NoSchedule"
+az aks nodepool add -g test --cluster-name test --name user -c 3 -k 1.28.5 -z 1 2 3 -s "Standard_D2s_v5" 
+az aks get-credentials -n test -g test --admin --overwrite-existing
+
+
