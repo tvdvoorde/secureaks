@@ -1,6 +1,63 @@
 # secaks
 
+
+## new topics
+
+- deployment safeguards
+- vm ip based load balancer
+- host network security groups
+- network isolated cluster (outbound type=node)
+- aad/entraid ssh
+- service connector
+- artifact sync
+- automatic image patch in registry
+- imds restriction (metadata endpoint)
+- cis aks policy initiative
+- azure policy add-on for aks
+-- mutation policy
+-- clusterwide inventory
+-- warning
+
+- monitoring
+-- managed prometheus
+-- managed grafana
+-- resource health alerts
+-- recommend alerts (preview)
+-- deteced early
+-- diagnose and solve (preview)
+-- network observability demo
+
+
 ## topics
+
+
+
+
+- deployment with
+-- security context
+-- pod topology spread constraints (zones)
+-- pod disruption budget
+-- probes
+-- readiness/liveness
+-- roling updates
+-- resource limits
+-- resource requests
+-- service account
+- pod security admission
+- defender for cloud / containers
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - Workload Identitiy Federation
 - CSI storage driver and keyvault and workload-identity-federation
@@ -57,3 +114,7 @@
 - Prometheus
 - Grafana
 - ELK
+
+## stretch
+
+- service connector
